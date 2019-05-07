@@ -1,0 +1,24 @@
+{
+  "name": "webash",
+  "version": "1.0.0",
+  "description": "A javascript terminal emulator for websites",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taokann/WeBash.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taokann/WeBash/issues"
+  },
+  "homepage": "https://github.com/taokann/WeBash#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "headersfromextensions": "^1.0.0"
+  }
+}
