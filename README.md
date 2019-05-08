@@ -1,12 +1,14 @@
 # WeBash
 A javascript terminal emulator for websites
-A nodeJS API thaht provides output of commands you sent to it
+A nodeJS API that provides output of commands you sent to it
 
 ## I don't understand...
 Always dreamed to have your website feel like a terminal ?
 Build it with WeBash ! WeBash is a contraction of 'Web' and 'Bash'.
+
+
 The users will be able to navigate throught your website (or just a part of it) using commands provided by WeBash API. If you choose to use WeBash for a entire website, it will be one-page : WeBash will carry informations from other pages to bring them to the user, who does not move from your CLI.
-Note that you have to build the command line interface, WeBash only provide output of commands.
+Note that you have to build the command line interface, WeBash only provides output of commands.
 
 ## Commands
 You can get the commands list by sending 'help' to the API.
@@ -24,7 +26,7 @@ The ``master`` branch is always stable and working, whereas the ``testing`` bran
 
 ## Get involved
 You can contribute to WeBash by offering new commands to it.
-Clone the repo, then send a pull request with you amazing new command !
+Clone the repo, then send a pull request with your amazing new command !
 
 
 Thanks for your interest in WeBash !
