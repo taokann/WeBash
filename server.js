@@ -30,8 +30,11 @@ app.get("/api/v1/:query", (req, res) => {
                 res.send(response)
             })
             break
+	case "info":
+	    res.send("This is WeBash, a web-based terminal emulator.")
+	    break
         default:
-            res.send("command not found")
+            res.send("Command not found")
             break
     }
 })
