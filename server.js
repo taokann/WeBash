@@ -37,7 +37,7 @@ app.get("/api/v1/:query", (req, res) => {
 	    ////show readme in console
 	    //break;
         default:
-            res.send("Command not found")
+            res.send("Command not found - type 'help' to get the list of commands")
             break
     }
 })
