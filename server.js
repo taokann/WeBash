@@ -22,10 +22,10 @@ app.get("/api/v1/:query", (req, res) => {
             })
             break
         case "info":
-            res.send("This is WeBash, a web-based terminal emulator.")
+            res.send("This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository on http://github.com/taokann/WeBash");
             break
         default:
-            res.send("Command not found")
+            res.send("Command not found - type 'help' to get the list of commands")
             break
     }
 })
