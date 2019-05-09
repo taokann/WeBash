@@ -1,7 +1,7 @@
 version: '3'
 services:
   api:
-    container_name: "webash_api"
+    container_name: "webash_api_testing"
     restart: always
     build: .
     ports:
