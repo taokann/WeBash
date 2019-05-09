@@ -31,8 +31,11 @@ app.get("/api/v1/:query", (req, res) => {
             })
             break
 	case "info":
-	    res.send("This is WeBash, a web-based terminal emulator.")
-	    break
+	    res.send("This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository on http://github.com/taokann/WeBash");
+	    break;
+	//case "readme"
+	    ////show readme in console
+	    //break;
         default:
             res.send("Command not found")
             break
