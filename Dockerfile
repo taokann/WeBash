@@ -7,9 +7,7 @@ RUN npm install
 
 COPY server.js /app
 COPY res /app/res
-COPY .git .git
-
-RUN git pull
+COPY README.md /app
 
 EXPOSE 80
 CMD [ "npm", "start" ]

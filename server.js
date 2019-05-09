@@ -1,21 +1,12 @@
 var express = require("express")
 var headers = require("headersfromextensions")
+var fs = require("fs")
 
 /*SCRIPTS IMPORTS*/
-example = require("./res/scripts/example")
+readFile = require("./res/scripts/readFile")
 /*END SCRIPTS IMPORTS*/
 
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-
-    next();
-}
-
 app = express()
-
-app.use(allowCrossDomain)
 
 app.get("/api/v1/:query", (req, res) => {
     res.header('Access-Control-Allow-Origin', '*')
@@ -25,14 +16,14 @@ app.get("/api/v1/:query", (req, res) => {
     query = query.split(" ")
 
     switch(query[0]) {
-        case "example":
-            example.run(query).then((response) => {
+        case "readme":
+            readFile.run("README.md", false).then((response) => {
                 res.send(response)
             })
             break
-	case "info":
-	    res.send("This is WeBash, a web-based terminal emulator.")
-	    break
+        case "info":
+            res.send("This is WeBash, a web-based terminal emulator.")
+            break
         default:
             res.send("Command not found")
             break
