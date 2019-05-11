@@ -4,6 +4,7 @@ var fs = require("fs")
 
 /*SCRIPTS IMPORTS*/
 readFile = require("./res/scripts/readFile")
+echo = require("./res/scripts/echo")
 /*END SCRIPTS IMPORTS*/
 
 app = express()
@@ -18,6 +19,11 @@ app.get("/api/v1/:query", (req, res) => {
     switch(query[0]) {
         case "readme":
             readFile.run("README.md", false).then((response) => {
+                res.send(response)
+            })
+            break
+        case "echo":
+            echo.run(query).then((response) => {
                 res.send(response)
             })
             break
