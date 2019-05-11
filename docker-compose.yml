@@ -1,8 +1,8 @@
 version: '3'
 services:
   api:
-    container_name: "webash_api_testing"
+    container_name: "webash_api"
     restart: always
     build: .
     ports:
-     - "8086:80"
+     - "8085:80"
