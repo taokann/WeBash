@@ -9,23 +9,22 @@ fi
 
 #REMOVE OLDS FILES
     #docker
-if [ ! -f $DIRECTORY/docker-compose.yml ]; then 
-    rm $DIRECTORY/docker-compose.yml > /dev/null 2>&1
-fi
-
-if [ -f $DIRECTORY/Dockerfile ]; then
-    rm $DIRECTORY/Dockerfile > /dev/null 2>&1
-fi
-
-if [ -f $DIRECTORY/.env ]; then
-    rm $DIRECTORY/.env > /dev/null 2>&1
-fi
+rm $DIRECTORY/docker-compose.yml > /dev/null 2>&1
+rm $DIRECTORY/Dockerfile > /dev/null 2>&1
+rm $DIRECTORY/.env > /dev/null 2>&1
 
 #UPDATE
 $GIT -C $DIRECTORY pull > /dev/null 2>&1
 
+if [ -z $1 ]; then
+    echo "Please specify a way to start Webash"
+    echo "Usage : bash start.sh <way> [args ...]"
+    echo "ways : docker"
+    echo "args : -p <port>"
+    echo "       -i <ip>"
+    echo "       -n <name>"
 #DOCKER
-if [ $1 = docker ]; then 
+elif [ $1 = docker ]; then 
     #check for dependencies
     DOCKER_COMPOSE=$(type -p docker-compose)
     DOCKER=$(type -p docker) 
@@ -83,6 +82,11 @@ if [ $1 = docker ]; then
     echo "container name:" $NAME
     echo "local ip:" $IP
     echo "------------"
+
+else
+    echo "Unknown way"
+    echo "Here are the means available :"
+    echo "docker"
 fi
 
 #You can add a crontab for this script for update your server automatically (change the path with your's)

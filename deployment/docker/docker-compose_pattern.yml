@@ -18,8 +18,3 @@ networks:
       driver: default
       config:
         - subnet: "${SUBNET}"
-
-#networks:
-#  default:
-#    external:
-#      name: nginx-proxy
