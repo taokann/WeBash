@@ -14,6 +14,9 @@ exports.run = (query) => {
                 case 'info':
                     resolve(info_help())
                     break
+                case 'ping':
+                    resolve(ping_help())
+                    break
                 default:
                     resolve(no_help())
                     break
@@ -25,9 +28,11 @@ exports.run = (query) => {
 help_help = () => {
     return("WeBash, version 1\n" +
     "Here is a list of the internal orders.\n" +
+    "Type help <command> to see the help of this command\n" +
+    "info\n" +
     "readme\n" +
     "echo [arg ...]\n" +
-    "info\n")
+    "ping <host> [arg ...]\n")
 }
 
 no_help = (command) => {
@@ -47,4 +52,10 @@ echo_help = () => {
 info_help = () => {
     return("info : info\n" +
     "Displays information about the WeBash project.")
+}
+
+ping_help = () => {
+    return("ping : ping <host or ip> [arg ...]\n" +
+    "parameters : [-i interval] [-c count]\n" +
+    "             [-s packetsize] [-w deadline]")
 }

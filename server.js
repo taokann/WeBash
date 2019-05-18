@@ -6,6 +6,7 @@ var fs = require("fs")
 readFile = require("./res/scripts/readFile")
 echo = require("./res/scripts/echo")
 help = require("./res/scripts/help")
+ping = require("./res/scripts/ping")
 /*END SCRIPTS IMPORTS*/
 
 app = express()
@@ -30,6 +31,11 @@ app.get("/api/v1/:query", (req, res) => {
             break
         case 'help':
             help.run(query).then((response) => {
+                res.send(response)
+            })
+            break
+        case 'ping':
+            ping.run(query).then((response) => {
                 res.send(response)
             })
             break
