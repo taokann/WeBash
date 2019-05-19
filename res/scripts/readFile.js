@@ -6,7 +6,11 @@ exports.run = (path, fromInternet) => {
         if(fromInternet) {
             fetch(path).then((response) => { 
                 response.text().then((response) => {
-                    resolve(response)
+                    let jsonRes = {
+                        status: "sucess",
+                        output: response
+                    }
+                    resolve(jsonRes)
                 })
             })
         }
@@ -14,12 +18,23 @@ exports.run = (path, fromInternet) => {
             fs.readFile(path, 'utf-8', (err, data) => {
                 if(err) {
                     if(err.code == "ENOENT") {
-                        resolve(path + " is not a file")
+                        let jsonRes = {
+                            status: "error",
+                            error: "0002",
+                            output: path + " is not a file"
+                        }
+                        resolve(jsonRes)
                     }
-                    console.log(err)
+                    else {
+                        console.log(err)
+                    }
                 }
                 else {
-                    resolve(data)
+                    let jsonRes = {
+                        status: "sucess",
+                        output: data
+                    }
+                    resolve(jsonRes)
                 }
             })
         }

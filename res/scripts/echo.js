@@ -3,6 +3,10 @@ exports.run = (query) => {
         query.shift()
         let toEcho = query.join(" ")
 
-        resolve(toEcho)
+        let jsonRes = {
+            status: "sucess",
+            output: toEcho
+        }
+        resolve(jsonRes)
     })
 }

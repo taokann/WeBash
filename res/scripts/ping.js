@@ -1,6 +1,8 @@
 var exec = require('child_process').exec
 
 exports.run = (query) => {
+    let jsonRes
+    
     let count = ""
     let host = ""
     let interval = ""
@@ -17,7 +19,12 @@ exports.run = (query) => {
                         count = cnt
                     }
                     else {
-                        resolve("Bad value for -c !")
+                        jsonRes = {
+                            status: "error",
+                            error: "0001",
+                            output: "Bad value for -c !"
+                        }
+                        resolve(jsonRes)
                     }
                     i += 1
                     break
@@ -28,7 +35,12 @@ exports.run = (query) => {
                         interval = intl
                     }
                     else {
-                        resolve("Bad value for -i !")
+                        jsonRes = {
+                            status: "error",
+                            error: "0001",
+                            output: "Bad value for -c !"
+                        }
+                        resolve(jsonRes)
                     }
                     i += 1
                     break
@@ -38,7 +50,12 @@ exports.run = (query) => {
                         size = sze
                     }
                     else {
-                        resolve("Bad value for -s !")
+                        jsonRes = {
+                            status: "error",
+                            error: "0001",
+                            output: "Bad value for -s !"
+                        }
+                        resolve(jsonRes)
                     }
                     i += 1
                     break
@@ -48,16 +65,31 @@ exports.run = (query) => {
                         timeout = tmt
                     }
                     else {
-                        resolve("Bad value for -w !")
+                        jsonRes = {
+                            status: "error",
+                            error: "0001",
+                            output: "Bad value for -w !"
+                        }
+                        resolve(jsonRes)
                     }
                     i += 1
                     break
                 case "-f":
-                    resolve("Flood is not available !")
+                    jsonRes = {
+                        status: "error",
+                        error: "0001",
+                        output: "Flood is not available !"
+                    }
+                    resolve(jsonRes)
                     i += 1
                     break
                 case "-a":
-                    resolve("Sound is not available !")
+                    jsonRes = {
+                        status: "error",
+                        error: "0001",
+                        output: "Sound is not available !"
+                    }
+                    resolve(jsonRes)
                     i += 1
                     break
                 default:
@@ -67,7 +99,12 @@ exports.run = (query) => {
         }
 
         if(host == "") {
-            resolve("Please specify a host !")
+            jsonRes = {
+                status: "error",
+                error: "0001",
+                output: "Please specify a host !"
+            }
+            resolve(jsonRes)
         }
 
         //CREATE COMMAND
@@ -103,10 +140,19 @@ exports.run = (query) => {
 
         exec(cmd, function(error, stdout, stderr) {
             if (error) {
-                resolve(error)
+                jsonRes = {
+                    status: "error",
+                    error: "9999",
+                    output: error
+                }
+                resolve(jsonRes)
             }
             else {
-                resolve(cmd + "\n" + stdout)
+                jsonRes = {
+                    status: "sucess",
+                    output: cmd + "\n" + stdout
+                }
+                resolve(jsonRes)
             }
         })
     })

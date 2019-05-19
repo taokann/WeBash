@@ -13,10 +13,34 @@ app = express()
 
 app.get("/api/v1/:query", (req, res) => {
     res.header('Access-Control-Allow-Origin', '*')
-    res.header('Content-Type', headers.get("txt"))
+    res.header('Content-Type', headers.get("json"))
 
     query = req.params.query
     query = query.split(" ")
+
+    /*
+    JSON TO RETURN :
+
+    Sucess :
+        let jsonRes = {
+            status: "sucess",
+            output: "an output"
+        }
+    
+    Error : 
+        let jsonRes = {
+            status: "error",
+            error: "error code",
+            output: "an output"
+        }
+
+    ERRORS CODES : 
+    0000 : nonexistent command
+    0001 : arg(s) error
+    0002 : a required file don't exist
+
+    9999 : undefined error
+    */
 
     switch(query[0]) {
         case "readme":

@@ -25,7 +25,7 @@ elif [ $1 = docker ]; then
         echo "Container already stopped !"
         exit 1
     else 
-        $DOCKER_COMPOSE -f $DIRECTORY/docker-compose.yml down
+        $DOCKER_COMPOSE -f $DIRECTORY/docker-compose.yml down --remove-orphans
     fi
     
 
