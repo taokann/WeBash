@@ -15,6 +15,7 @@ app.get("/api/v1/:query", (req, res) => {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Content-Type', headers.get("json"))
 
+    let jsonRes
     query = req.params.query
     query = query.split(" ")
 
@@ -64,10 +65,18 @@ app.get("/api/v1/:query", (req, res) => {
             })
             break
         case "info":
-            res.send("This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository on http://github.com/taokann/WeBash");
+            jsonRes = {
+                status: "sucess",
+                output: "This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository on http://github.com/taokann/WeBash"
+            }
+            res.send(jsonRes)
             break
         default:
-            res.send("Command not found - type 'help' to get the list of commands")
+            jsonRes = {
+                status: "sucess",
+                output: "Command not found - type 'help' to get the list of commands"
+            }
+            res.send(jsonRes)
             break
     }
 })
