@@ -1,6 +1,6 @@
 #
 # File name: Dockerfile_pattern
-# Description: TODO
+# Description: Dockerfile which builds the Webash api's image
 # Authors: colivier74
 # If you're a new WeBash contributor and worked on this file, please add you name here.
 #
