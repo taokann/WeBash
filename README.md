@@ -56,6 +56,10 @@ local ip: 172.22.0.100(:80)
 #### Properly stop the container :
 `bash stop.sh docker`
 
+## Free software
+All WeBash software and source code is free and open-source software (*free* refers to freedom, not price), and is under the GNU General Public License.
+For more info see 'LICENSE' file in repo.
+
 ## Get involved
 You can contribute to WeBash by offering new commands to it.
 Clone the repo, then send a pull request with your amazing new command !
