@@ -57,8 +57,30 @@ local ip: 172.22.0.100(:80)
 `bash stop.sh docker`
 
 ## Free software
-All WeBash software and source code is free and open-source software (*free* refers to freedom, not price), and is under the GNU General Public License.
+All WeBash software and source code is free and open-source software (*free* refers to freedom, not price), and is under the GNU General Public License Version 3.0.
 For more info see 'LICENSE' file in repo.
+
+### License note
+Please add at the beginning of each new file a large comment contaning:
+* File name
+* Description
+* Author
+* License note
+
+Here is a template of what you should add:
+```
+/*
+ *
+ * File name: example.js
+ * Description: example decription
+ * Authors: taokann.one and colivier74
+ * If you're a new WeBash contributor and worked on this file, please add you name here.
+ *
+ * This file is part of the WeBash project with is released under the terms of GNU General Public License V3.0.
+ * You should have recieved a copy of it along with this file, if not, please write to :
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth floor, Boston, MA 02110-1301 USA.
+ */
+```
 
 ## Get involved
 You can contribute to WeBash by offering new commands to it.
