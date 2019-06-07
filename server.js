@@ -1,3 +1,15 @@
+/*
+ *
+ * File name: server.js
+ * Description: main node.js script file
+ * Authors: taokann.one and colivier74
+ * If you're a new WeBash contributor and worked on this file, please add you name here.
+ *
+ * This file is part of the WeBash project with is released under the terms of GNU General Public License V3.0.
+ * You should have recieved a copy of it along with this file, if not, please write to :
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth floor, Boston, MA 02110-1301 USA.
+ */
+
 var express = require("express")
 var headers = require("headersfromextensions")
 var fs = require("fs")
