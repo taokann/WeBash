@@ -1,3 +1,14 @@
+/*
+ *
+ * File name: server.js
+ * Description: main node.js script file
+ * Authors: taokann.one and colivier74
+ * If you're a new WeBash contributor and worked on this file, please add your name here.
+ *
+ * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
+ * You should have received a copy of the GNU Affero General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 var express = require("express")
 var headers = require("headersfromextensions")
 var fs = require("fs")
@@ -13,10 +24,35 @@ app = express()
 
 app.get("/api/v1/:query", (req, res) => {
     res.header('Access-Control-Allow-Origin', '*')
-    res.header('Content-Type', headers.get("txt"))
+    res.header('Content-Type', headers.get("json"))
 
+    let jsonRes
     query = req.params.query
     query = query.split(" ")
+
+    /*
+    JSON TO RETURN :
+
+    Sucess :
+        let jsonRes = {
+            status: "sucess",
+            output: "an output"
+        }
+    
+    Error : 
+        let jsonRes = {
+            status: "error",
+            error: "error code",
+            output: "an output"
+        }
+
+    ERRORS CODES : 
+    0000 : nonexistent command
+    0001 : arg(s) error
+    0002 : a required file don't exist
+
+    9999 : undefined error
+    */
 
     switch(query[0]) {
         case "readme":
@@ -40,10 +76,18 @@ app.get("/api/v1/:query", (req, res) => {
             })
             break
         case "info":
-            res.send("This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository on http://github.com/taokann/WeBash");
+            jsonRes = {
+                status: "sucess",
+                output: "This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository on http://github.com/taokann/WeBash"
+            }
+            res.send(jsonRes)
             break
         default:
-            res.send("Command not found - type 'help' to get the list of commands")
+            jsonRes = {
+                status: "sucess",
+                output: "Command not found - type 'help' to get the list of commands"
+            }
+            res.send(jsonRes)
             break
     }
 })

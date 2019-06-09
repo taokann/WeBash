@@ -56,9 +56,47 @@ local ip: 172.22.0.100(:80)
 #### Properly stop the container :
 `bash stop.sh docker`
 
+## Free software
+All WeBash software and source code is free and open-source software (*free* refers to freedom, not price), you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3.0 of the license.
+For more info see 'LICENSE' file in repo.
+
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License V3.0 for more details.
+
+
+You should have received a copy of the GNU Affero General Public License along with this program, in 'LICENSE' file of the repo. If not, see <https://www.gnu.org/licenses/>.
+
+### License note
+Please add at the beginning of each new file a large comment contaning:
+* File name
+* Description
+* Author
+* License note
+
+Here is a template of what you should add:
+```
+/*
+ *
+ * File name: example.js
+ * Description: example decription
+ * Authors: taokann.one and colivier74
+ * If you're a new WeBash contributor and worked on this file, please add your name here.
+ *
+ * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
+ * You should have received a copy of the GNU Affero General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
+ */
+```
+
 ## Get involved
 You can contribute to WeBash by offering new commands to it.
 Clone the repo, then send a pull request with your amazing new command !
 
 
 Thanks for your interest in WeBash !
+
+## Contact
+WeBash is Copyright © 2019 Tao-Kann MARTIN and Olivier CARTIER
+
+
+If you have any questions, now or maybe a long time after we published this software, feel free to contact us by email : webash-at-taokann.com (both developpers will read your message).
+

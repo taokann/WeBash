@@ -1,3 +1,13 @@
+#
+# File name: stop.sh
+# Description: Bash script to easily stop the docker container
+# Authors: colivier74
+# If you're a new WeBash contributor and worked on this file, please add your name here.
+#
+# This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
+# You should have received a copy of the GNU Affero General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
+#
+
 #!/bin/bash
 DIRECTORY=$(cd `dirname $0` && pwd)
 
@@ -25,7 +35,7 @@ elif [ $1 = docker ]; then
         echo "Container already stopped !"
         exit 1
     else 
-        $DOCKER_COMPOSE -f $DIRECTORY/docker-compose.yml down
+        $DOCKER_COMPOSE -f $DIRECTORY/docker-compose.yml down --remove-orphans
     fi
     
 

@@ -1,24 +1,63 @@
+/*
+ *
+ * File name: help.js
+ * Description: help command
+ * Authors: taokann.one and colivier74
+ * If you're a new WeBash contributor and worked on this file, please add your name here.
+ *
+ * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
+ * You should have received a copy of the GNU Affero General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
+ *
+ */
+
 exports.run = (query) => {
     return new Promise((resolve, reject) => {
+        let jsonRes
+        
         if(!query[1]) {
-            resolve(help_help())
+            jsonRes = {
+                status: "sucess",
+                output: help_help()
+            }
+            resolve(jsonRes)
         }
         else {
             switch(query[1]) {
                 case "readme":
-                    resolve(readme_help())
+                    jsonRes = {
+                        status: "sucess",
+                        output: readme_help()
+                    }
+                    resolve(jsonRes)
                     break
                 case 'echo':
-                    resolve(echo_help())
+                    jsonRes = {
+                        status: "sucess",
+                        output: echo_help()
+                    }
+                    resolve(jsonRes)
                     break
                 case 'info':
-                    resolve(info_help())
+                    jsonRes = {
+                        status: "sucess",
+                        output: info_help()
+                    }
+                    resolve(jsonRes)
                     break
                 case 'ping':
-                    resolve(ping_help())
+                    jsonRes = {
+                        status: "sucess",
+                        output: ping_help()
+                    }
+                    resolve(jsonRes)
                     break
                 default:
-                    resolve(no_help())
+                    jsonRes = {
+                        status: "error",
+                        error: "0001",
+                        output: no_help()
+                    }
+                    resolve(jsonRes)
                     break
             }
         }

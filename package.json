@@ -19,7 +19,7 @@
   "homepage": "https://github.com/taokann/WeBash#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "headersfromextensions": "^1.0.0",
+    "headersfromextensions": "^1.0.1",
     "node-fetch": "^2.3.0"
   }
 }
