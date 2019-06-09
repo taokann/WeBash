@@ -57,14 +57,14 @@ local ip: 172.22.0.100(:80)
 `bash stop.sh docker`
 
 ## Free software
-All WeBash software and source code is free and open-source software (*free* refers to freedom, not price), you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 3 of the license.
+All WeBash software and source code is free and open-source software (*free* refers to freedom, not price), you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3.0 of the license.
 For more info see 'LICENSE' file in repo.
 
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License V3.0 for more details.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License V3.0 for more details.
 
 
-You should have received a copy of the GNU General Public License along with this program, in 'LICENSE' file of the repo. If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Affero General Public License along with this program, in 'LICENSE' file of the repo. If not, see <https://www.gnu.org/licenses/>.
 
 ### License note
 Please add at the beginning of each new file a large comment contaning:
@@ -82,8 +82,8 @@ Here is a template of what you should add:
  * Authors: taokann.one and colivier74
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
- * This file is part of the WeBash project with is released under the terms of GNU General Public License V3.0.
- * You should have received a copy of the GNU General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
+ * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
+ * You should have received a copy of the GNU Affero General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
  */
 ```
 
