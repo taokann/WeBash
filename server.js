@@ -60,6 +60,10 @@ app.get("/api/v1/:query", (req, res) => {
                 res.send(response)
             })
             break
+	case "license":
+	    readFile.run("LICENSE", false).then((response) => {
+		res.send(response)
+	    })
         case "echo":
             echo.run(query).then((response) => {
                 res.send(response)
@@ -78,7 +82,7 @@ app.get("/api/v1/:query", (req, res) => {
         case "info":
             jsonRes = {
                 status: "sucess",
-                output: "This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository on http://github.com/taokann/WeBash"
+                output: "This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository by typing 'source'. WeBash is free software, released under the terms of the GNU Affero General Public License, version 3. for more info type 'license'."
             }
             res.send(jsonRes)
             break
