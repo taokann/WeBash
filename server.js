@@ -84,7 +84,7 @@ app.get("/api/v1/:query", (req, res) => {
             break
 	case 'source':
 	    jsonRes = {
-		status: "success"
+		status: "success",
 		output: "According to the GNU Affero General Public License, you will find the source code of this program at https://github.com/taokann/WeBash/"
 	    }
         default:
