@@ -35,7 +35,7 @@ exports.run = (path, fromInternet) => {
                             error: "0002",
                             output: path + " is not a file"
                         }
-                        resolve(jsonRes)
+                        reject(jsonRes)
                     }
                     else {
                         console.log(err)

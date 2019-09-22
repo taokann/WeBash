@@ -18,6 +18,7 @@ readFile = require("./res/scripts/readFile")
 echo = require("./res/scripts/echo")
 help = require("./res/scripts/help")
 ping = require("./res/scripts/ping")
+man = require("./res/scripts/man")
 /*END SCRIPTS IMPORTS*/
 
 app = express()
@@ -58,6 +59,8 @@ app.get("/api/v1/:query", (req, res) => {
         case "readme":
             readFile.run("README.md", false).then((response) => {
                 res.send(response)
+            }).catch((response) => {
+                res.send(response)
             })
             break
         case "echo":
@@ -72,6 +75,12 @@ app.get("/api/v1/:query", (req, res) => {
             break
         case 'ping':
             ping.run(query).then((response) => {
+                res.send(response)
+            })
+            break
+        case 'man':
+            console.log("hey")
+            man.run(query).then((response) => {
                 res.send(response)
             })
             break
