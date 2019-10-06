@@ -76,7 +76,7 @@ exports.run = (query) => {
                     jsonRes = {
                         status: "error",
                         error: "0001",
-                        output: no_help()
+                        output: no_help(query[1])
                     }
                     resolve(jsonRes)
                     break
