@@ -4,3 +4,5 @@ Dockerfile
 res/git-libs/
 node_modules/
 package-lock.json
+npmerr.txt
+npmout.txt

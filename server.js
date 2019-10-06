@@ -11,7 +11,7 @@
 
 var express = require("express")
 var headers = require("headersfromextensions")
-var fs = require("fs")
+require('dotenv').config()
 
 /*SCRIPTS IMPORTS*/
 readFile = require("./res/scripts/readFile")
@@ -21,6 +21,7 @@ ping = require("./res/scripts/ping")
 man = require("./res/scripts/man")
 /*END SCRIPTS IMPORTS*/
 
+process.title = "WeBash"
 app = express()
 console.log("WEBASH LAUNCHED")
 app.get("/api/v1/:query", (req, res) => {
@@ -114,4 +115,7 @@ app.get("/api/v1/:query", (req, res) => {
     res.send()
 })
 
-app.listen(8085)
+const PORT = process.env.PORT || 8085
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
+})

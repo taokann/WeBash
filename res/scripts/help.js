@@ -56,12 +56,14 @@ exports.run = (query) => {
                         status: "sucess",
                         output: source_help()
                     }
+                    resolve(jsonRes)
                     break
                 case 'man':
                     jsonRes = {
                         status: "sucess",
                         output: man_help()
                     }
+                    resolve(jsonRes)
                     break
                 default:
                     jsonRes = {

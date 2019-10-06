@@ -33,10 +33,14 @@ $GIT clone https://github.com/colivier74/man-db-txt.git res/git-libs/man-db-txt
 if [ -z $1 ]; then
     echo "Please specify a way to start Webash"
     echo "Usage : bash start.sh <way> [args ...]"
-    echo "ways : docker"
+    echo ""
+    echo "way : docker"
     echo "args : -p <port>"
     echo "       -i <ip>"
     echo "       -n <name>"
+    echo ""
+    echo "way : node"
+    echo "args : -p <port>"
 #DOCKER
 elif [ $1 = docker ]; then 
     #check for dependencies
@@ -96,11 +100,49 @@ elif [ $1 = docker ]; then
     echo "container name:" $NAME
     echo "local ip:" $IP
     echo "------------"
+elif [ $1 = node ]; then 
+    #check for dependencies
+    NODE=$(type -p node)
+    NPM=$(type -p npm) 
+    if [ -z $NODE ]; then
+        echo "WeBash needs node.js to work, please install it."
+        exit 1
+    fi
 
+    if [ -z $NPM ]; then
+        echo "WeBash needs npm to work, please install it."
+        exit 1
+    fi
+
+    #Install dependencies npm
+    $NPM install
+
+    while [ -n "$1" ]; do
+        case $1 in
+            -p|--port) PORT=$2; shift;;
+        esac
+        shift
+    done
+
+    if [ -z $PORT ]; then
+        PORT="8085"
+    fi
+
+    touch $DIRECTORY/.env
+    echo "PORT=$PORT" >> $DIRECTORY/.env
+
+    #run container
+    $NPM start > $DIRECTORY/npmout.txt 2> $DIRECTORY/npmerr.txt &
+
+    echo "------------"
+    echo "WeBash was successfully started with node.js and the following parameters:"
+    echo "port :" $PORT
+    echo "------------"
 else
     echo "Unknown way"
     echo "Here are the means available :"
     echo "docker"
+    echo "node"
 fi
 
 #You can add a crontab for this script for update your server automatically (change the path with your's)
