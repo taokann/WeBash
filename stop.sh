@@ -43,6 +43,8 @@ elif [ $1 = docker ]; then
 rm $DIRECTORY/docker-compose.yml > /dev/null 2>&1
 rm $DIRECTORY/Dockerfile > /dev/null 2>&1
 rm $DIRECTORY/.env > /dev/null 2>&1
+    # MAN-DB-TXT
+sudo rm -rd res/git-libs/man-db-txt
 
 else    
     echo "Unknown way"
