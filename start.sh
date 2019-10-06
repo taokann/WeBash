@@ -22,13 +22,15 @@ fi
 rm $DIRECTORY/docker-compose.yml > /dev/null 2>&1
 rm $DIRECTORY/Dockerfile > /dev/null 2>&1
 rm $DIRECTORY/.env > /dev/null 2>&1
-    # MAN-DB-TXT
-sudo rm -rd res/git-libs/man-db-txt
+    #node
+rm $DIRECTORY/npmout.txt > /dev/null 2>&1
+rm $DIRECTORY/npmerr.txt > /dev/null 2>&1 
 
 #UPDATE
-$GIT -C $DIRECTORY pull > /dev/null 2>&1
+$GIT -C $DIRECTORY pull
     # MAN-DB-TXT
 $GIT clone https://github.com/colivier74/man-db-txt.git res/git-libs/man-db-txt
+$GIT -C res/git-libs/man-db-txt pull
 
 if [ -z $1 ]; then
     echo "Please specify a way to start Webash"

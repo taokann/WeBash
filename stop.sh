@@ -72,8 +72,6 @@ elif [ $1 = node ]; then
 ######################FILES FOR EVERY WAYS
     #removes files
 rm $DIRECTORY/.env > /dev/null 2>&1
-    # MAN-DB-TXT
-sudo rm -rd res/git-libs/man-db-txt
 
 else    
     echo "Unknown way"
