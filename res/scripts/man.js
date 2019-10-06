@@ -18,7 +18,7 @@ exports.run = (query) => {
 
         if(query[1] && query[1] != "") {
             let cmd = query[0] + " " + query[1]
-            readFile.run("/app/res/git-libs/man-db-txt/man-txt/" + query[1] + ".txt", false).then((response) => {
+            readFile.run("./res/git-libs/man-db-txt/man-txt/" + query[1] + ".txt", false).then((response) => {
                 jsonRes = {
                     status: "sucess",
                     output: cmd + "\n" + response.output

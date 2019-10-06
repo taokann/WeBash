@@ -38,7 +38,6 @@ if [ -z $1 ]; then
     echo ""
     echo "way : docker"
     echo "args : -p <port>"
-    echo "       -i <ip>"
     echo "       -n <name>"
     echo ""
     echo "way : node"
@@ -66,7 +65,6 @@ elif [ $1 = docker ]; then
         case $1 in
             -p|--port) PORT=$2; shift;;
             -n|--name) NAME=$2; shift;;
-            -i|--ip) IP=$2; shift;;
         esac
         shift
     done
@@ -79,19 +77,9 @@ elif [ $1 = docker ]; then
         NAME="webash"
     fi
 
-    if [ -z $IP ]; then
-        IP="172.22.0.100"
-    fi
-
-    SPLIT_IP=($(echo $IP | tr '.' "\n"))
-    SUBNET=${SPLIT_IP[0]}.${SPLIT_IP[1]}.${SPLIT_IP[2]}."0/24"
-
     touch $DIRECTORY/.env
     echo "PORT=$PORT" >> $DIRECTORY/.env
     echo "NAME=$NAME" >> $DIRECTORY/.env
-
-    echo "IP=$IP" >> $DIRECTORY/.env
-    echo "SUBNET=$SUBNET" >> $DIRECTORY/.env
 
     #run container
     $DOCKER_COMPOSE -f $DIRECTORY/docker-compose.yml up --build -d > /dev/null 2>&1
@@ -100,7 +88,6 @@ elif [ $1 = docker ]; then
     echo "WeBash was successfully started with docker and the following parameters:"
     echo "port :" $PORT
     echo "container name:" $NAME
-    echo "local ip:" $IP
     echo "------------"
 elif [ $1 = node ]; then 
     #check for dependencies

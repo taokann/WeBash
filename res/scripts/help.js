@@ -130,6 +130,7 @@ man_help = () => {
     return("man : man <command>\n" +
     "Show the man of the specified command")
 }
+
 license_help = () => {
         return("Displays the integral text of the GNU Affero General Public License under which WeBash is distributed.");
 }

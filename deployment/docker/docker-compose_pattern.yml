@@ -8,13 +8,3 @@ services:
       - .env
     ports:
      - "${PORT}:8085"
-    networks:
-      net:
-        ipv4_address: "${IP}"
-
-networks:
-  net:
-    ipam:
-      driver: default
-      config:
-        - subnet: "${SUBNET}"
