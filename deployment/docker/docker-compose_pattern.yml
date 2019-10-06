@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     ports:
-     - "${PORT}:80"
+     - "${PORT}:8085"
     networks:
       net:
         ipv4_address: "${IP}"

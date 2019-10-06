@@ -16,20 +16,31 @@ exports.run = (query) => {
     return new Promise((resolve, reject) => {
         let jsonRes
 
-        let cmd = query[0] + " " + query[1]
-        readFile.run("/app/res/git-libs/man-db-txt/man-txt/" + query[1] + ".txt", false).then((response) => {
-            jsonRes = {
-                status: "sucess",
-                output: cmd + "\n" + response.output
-            }
-            resolve(jsonRes)
-        }).catch((response) => {
+        if(query[1] && query[1] != "") {
+            let cmd = query[0] + " " + query[1]
+            readFile.run("/app/res/git-libs/man-db-txt/man-txt/" + query[1] + ".txt", false).then((response) => {
+                jsonRes = {
+                    status: "sucess",
+                    output: cmd + "\n" + response.output
+                }
+                resolve(jsonRes)
+            }).catch((response) => {
+                jsonRes = {
+                    status: "error",
+                    error: "0001",
+                    output: query[1] + " unavailable in man (github.com/colivier74/man-db-txt)"
+                }
+                resolve(jsonRes)
+            })
+        }
+        else {
             jsonRes = {
                 status: "error",
                 error: "0001",
-                output: query[1] + " unavailable in man (github.com/colivier74/man-db-txt)"
+                output: "Please specify a command for man:\n" +
+                "man <command>"
             }
             resolve(jsonRes)
-        })
+        }
     })
 }

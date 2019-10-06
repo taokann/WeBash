@@ -51,11 +51,18 @@ exports.run = (query) => {
                     }
                     resolve(jsonRes)
                     break
-		case 'source':
-		    jsonRes = {
-			status: "sucess",
-			output: source_help()
-		    }
+                case 'source':
+                    jsonRes = {
+                        status: "sucess",
+                        output: source_help()
+                    }
+                    break
+                case 'man':
+                    jsonRes = {
+                        status: "sucess",
+                        output: man_help()
+                    }
+                    break
                 default:
                     jsonRes = {
                         status: "error",
@@ -76,8 +83,9 @@ help_help = () => {
     "info\n" +
     "readme\n" +
     "echo [arg ...]\n" +
-    "ping <host> [arg ...]\n"
-    "source\n")
+    "ping <host or ip> [arg ...]\n" +
+    "source\n" +
+    "man <command>")
 }
 
 no_help = (command) => {
@@ -107,4 +115,9 @@ ping_help = () => {
 
 source_help = () => {
 	return("source : source\nDisplays a link to source code according to the GNU AGPL license");
+}
+
+man_help = () => {
+    return("man : man <command>\n" +
+    "Show the man of the specified command")
 }

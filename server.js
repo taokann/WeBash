@@ -22,7 +22,7 @@ man = require("./res/scripts/man")
 /*END SCRIPTS IMPORTS*/
 
 app = express()
-
+console.log("WEBASH LAUNCHED")
 app.get("/api/v1/:query", (req, res) => {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Content-Type', headers.get("json"))
@@ -63,10 +63,11 @@ app.get("/api/v1/:query", (req, res) => {
                 res.send(response)
             })
             break
-	case "license":
-	    readFile.run("LICENSE", false).then((response) => {
-		res.send(response)
-	    })
+        case "license":
+            readFile.run("LICENSE", false).then((response) => {
+                res.send(response)
+            })
+            break
         case "echo":
             echo.run(query).then((response) => {
                 res.send(response)
@@ -83,7 +84,6 @@ app.get("/api/v1/:query", (req, res) => {
             })
             break
         case 'man':
-            console.log("hey")
             man.run(query).then((response) => {
                 res.send(response)
             })
@@ -95,11 +95,11 @@ app.get("/api/v1/:query", (req, res) => {
             }
             res.send(jsonRes)
             break
-	case 'source':
-	    jsonRes = {
-		status: "success",
-		output: "According to the GNU Affero General Public License, you will find the source code of this program at https://github.com/taokann/WeBash/"
-	    }
+        case 'source':
+            jsonRes = {
+                status: "success",
+                output: "According to the GNU Affero General Public License, you will find the source code of this program at https://github.com/taokann/WeBash/"
+	        }
         default:
             jsonRes = {
                 status: "sucess",
@@ -114,4 +114,4 @@ app.get("/api/v1/:query", (req, res) => {
     res.send()
 })
 
-app.listen(80)
+app.listen(8085)

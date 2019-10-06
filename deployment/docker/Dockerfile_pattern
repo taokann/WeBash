@@ -9,7 +9,7 @@
 #
 
 FROM node:latest
-MAINTAINER Olivier Cartier <colivier.dev@gmail.com>
+LABEL maintainer="colivier.dev@gmail.com"
 
 WORKDIR /app
 COPY package.json /app
@@ -19,5 +19,5 @@ COPY server.js /app
 COPY res /app/res
 COPY README.md /app
 
-EXPOSE 80
+EXPOSE 8085
 CMD [ "npm", "start" ]
