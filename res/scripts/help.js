@@ -51,11 +51,32 @@ exports.run = (query) => {
                     }
                     resolve(jsonRes)
                     break
+                case 'source':
+                    jsonRes = {
+                        status: "sucess",
+                        output: source_help()
+                    }
+                    resolve(jsonRes)
+                    break
+                case 'man':
+                    jsonRes = {
+                        status: "sucess",
+                        output: man_help()
+                    }
+                    resolve(jsonRes)
+                    break
+		case 'license':
+		    jsonRes = {
+                        status: "sucess",
+                        output: license_help()
+                    }
+                    resolve(jsonRes)
+                    break
                 default:
                     jsonRes = {
                         status: "error",
                         error: "0001",
-                        output: no_help()
+                        output: no_help(query[1])
                     }
                     resolve(jsonRes)
                     break
@@ -71,7 +92,9 @@ help_help = () => {
     "info\n" +
     "readme\n" +
     "echo [arg ...]\n" +
-    "ping <host> [arg ...]\n")
+    "ping <host or ip> [arg ...]\n" +
+    "source\n" +
+    "man <command>")
 }
 
 no_help = (command) => {
@@ -97,4 +120,17 @@ ping_help = () => {
     return("ping : ping <host or ip> [arg ...]\n" +
     "parameters : [-i interval] [-c count]\n" +
     "             [-s packetsize] [-w deadline]")
+}
+
+source_help = () => {
+	return("source : source\nDisplays a link to source code according to the GNU AGPL license");
+}
+
+man_help = () => {
+    return("man : man <command>\n" +
+    "Show the man of the specified command")
+}
+
+license_help = () => {
+        return("Displays the integral text of the GNU Affero General Public License under which WeBash is distributed.");
 }

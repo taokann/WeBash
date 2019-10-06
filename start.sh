@@ -22,21 +22,26 @@ fi
 rm $DIRECTORY/docker-compose.yml > /dev/null 2>&1
 rm $DIRECTORY/Dockerfile > /dev/null 2>&1
 rm $DIRECTORY/.env > /dev/null 2>&1
-    # MAN-DB-TXT
-sudo rm -rd res/git-libs/man-db-txt
+    #node
+rm $DIRECTORY/npmout.txt > /dev/null 2>&1
+rm $DIRECTORY/npmerr.txt > /dev/null 2>&1 
 
 #UPDATE
-$GIT -C $DIRECTORY pull > /dev/null 2>&1
+$GIT -C $DIRECTORY pull
     # MAN-DB-TXT
 $GIT clone https://github.com/colivier74/man-db-txt.git res/git-libs/man-db-txt
+$GIT -C res/git-libs/man-db-txt pull
 
 if [ -z $1 ]; then
     echo "Please specify a way to start Webash"
     echo "Usage : bash start.sh <way> [args ...]"
-    echo "ways : docker"
+    echo ""
+    echo "way : docker"
     echo "args : -p <port>"
-    echo "       -i <ip>"
     echo "       -n <name>"
+    echo ""
+    echo "way : node"
+    echo "args : -p <port>"
 #DOCKER
 elif [ $1 = docker ]; then 
     #check for dependencies
@@ -60,7 +65,6 @@ elif [ $1 = docker ]; then
         case $1 in
             -p|--port) PORT=$2; shift;;
             -n|--name) NAME=$2; shift;;
-            -i|--ip) IP=$2; shift;;
         esac
         shift
     done
@@ -73,19 +77,9 @@ elif [ $1 = docker ]; then
         NAME="webash"
     fi
 
-    if [ -z $IP ]; then
-        IP="172.22.0.100"
-    fi
-
-    SPLIT_IP=($(echo $IP | tr '.' "\n"))
-    SUBNET=${SPLIT_IP[0]}.${SPLIT_IP[1]}.${SPLIT_IP[2]}."0/24"
-
     touch $DIRECTORY/.env
     echo "PORT=$PORT" >> $DIRECTORY/.env
     echo "NAME=$NAME" >> $DIRECTORY/.env
-
-    echo "IP=$IP" >> $DIRECTORY/.env
-    echo "SUBNET=$SUBNET" >> $DIRECTORY/.env
 
     #run container
     $DOCKER_COMPOSE -f $DIRECTORY/docker-compose.yml up --build -d > /dev/null 2>&1
@@ -94,13 +88,50 @@ elif [ $1 = docker ]; then
     echo "WeBash was successfully started with docker and the following parameters:"
     echo "port :" $PORT
     echo "container name:" $NAME
-    echo "local ip:" $IP
     echo "------------"
+elif [ $1 = node ]; then 
+    #check for dependencies
+    NODE=$(type -p node)
+    NPM=$(type -p npm) 
+    if [ -z $NODE ]; then
+        echo "WeBash needs node.js to work, please install it."
+        exit 1
+    fi
 
+    if [ -z $NPM ]; then
+        echo "WeBash needs npm to work, please install it."
+        exit 1
+    fi
+
+    #Install dependencies npm
+    $NPM install
+
+    while [ -n "$1" ]; do
+        case $1 in
+            -p|--port) PORT=$2; shift;;
+        esac
+        shift
+    done
+
+    if [ -z $PORT ]; then
+        PORT="8085"
+    fi
+
+    touch $DIRECTORY/.env
+    echo "PORT=$PORT" >> $DIRECTORY/.env
+
+    #run container
+    $NPM start > $DIRECTORY/npmout.txt 2> $DIRECTORY/npmerr.txt &
+
+    echo "------------"
+    echo "WeBash was successfully started with node.js and the following parameters:"
+    echo "port :" $PORT
+    echo "------------"
 else
     echo "Unknown way"
     echo "Here are the means available :"
     echo "docker"
+    echo "node"
 fi
 
 #You can add a crontab for this script for update your server automatically (change the path with your's)

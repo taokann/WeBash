@@ -15,6 +15,7 @@ if [ -z $1 ]; then
     echo "Please specify how you started Webash"
     echo "Usage : bash stop.sh <way>"
     echo "ways : docker"
+    echo "       node"
 #DOCKER
 elif [ $1 = docker ]; then 
     #check for dependencies
@@ -31,23 +32,50 @@ elif [ $1 = docker ]; then
     fi
     
     #stop container
-    if [ ! -f $DIRECTORY/.env ]; then
+    if [ ! -f $DIRECTORY/docker-compose.yml ]; then
         echo "Container already stopped !"
         exit 1
     else 
         $DOCKER_COMPOSE -f $DIRECTORY/docker-compose.yml down --remove-orphans
     fi
-    
 
     #removes files
-rm $DIRECTORY/docker-compose.yml > /dev/null 2>&1
-rm $DIRECTORY/Dockerfile > /dev/null 2>&1
+    rm $DIRECTORY/docker-compose.yml > /dev/null 2>&1
+    rm $DIRECTORY/Dockerfile > /dev/null 2>&1   
+#node
+elif [ $1 = node ]; then 
+    #check for dependencies
+    NODE=$(type -p node)
+    NPM=$(type -p npm) 
+    if [ -z $NODE ]; then
+        echo "WeBash needs node.js to work, please install it."
+        exit 1
+    fi
+
+    if [ -z $NPM ]; then
+        echo "WeBash needs npm to work, please install it."
+        exit 1
+    fi
+    
+    #stop npm
+    if [ ! -f $DIRECTORY/npmout.txt ]; then
+        echo "Node already stopped !"
+        exit 1
+    else 
+        killall -SIGINT WeBash
+    fi
+
+    #removes files
+    rm $DIRECTORY/npmout.txt > /dev/null 2>&1
+    rm $DIRECTORY/npmerr.txt > /dev/null 2>&1  
+
+######################FILES FOR EVERY WAYS
+    #removes files
 rm $DIRECTORY/.env > /dev/null 2>&1
-    # MAN-DB-TXT
-sudo rm -rd res/git-libs/man-db-txt
 
 else    
     echo "Unknown way"
     echo "Here are the means available :"
     echo "docker"
+    echo "node"
 fi

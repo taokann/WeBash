@@ -11,7 +11,7 @@
 
 var express = require("express")
 var headers = require("headersfromextensions")
-var fs = require("fs")
+require('dotenv').config()
 
 /*SCRIPTS IMPORTS*/
 readFile = require("./res/scripts/readFile")
@@ -21,8 +21,9 @@ ping = require("./res/scripts/ping")
 man = require("./res/scripts/man")
 /*END SCRIPTS IMPORTS*/
 
+process.title = "WeBash"
 app = express()
-
+console.log("WEBASH LAUNCHED")
 app.get("/api/v1/:query", (req, res) => {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Content-Type', headers.get("json"))
@@ -63,6 +64,11 @@ app.get("/api/v1/:query", (req, res) => {
                 res.send(response)
             })
             break
+        case "license":
+            readFile.run("LICENSE", false).then((response) => {
+                res.send(response)
+            })
+            break
         case "echo":
             echo.run(query).then((response) => {
                 res.send(response)
@@ -79,7 +85,6 @@ app.get("/api/v1/:query", (req, res) => {
             })
             break
         case 'man':
-            console.log("hey")
             man.run(query).then((response) => {
                 res.send(response)
             })
@@ -87,7 +92,14 @@ app.get("/api/v1/:query", (req, res) => {
         case "info":
             jsonRes = {
                 status: "sucess",
-                output: "This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository on http://github.com/taokann/WeBash"
+                output: "This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository by typing 'source'. WeBash is free software, released under the terms of the GNU Affero General Public License, version 3. for more info type 'license'."
+            }
+            res.send(jsonRes)
+            break
+        case 'source':
+            jsonRes = {
+                status: "success",
+                output: "According to the GNU Affero General Public License, you will find the source code of this program at https://github.com/taokann/WeBash/"
             }
             res.send(jsonRes)
             break
@@ -105,4 +117,7 @@ app.get("/api/v1/:query", (req, res) => {
     res.send()
 })
 
-app.listen(80)
+const PORT = process.env.PORT || 8085
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
+})

@@ -7,14 +7,4 @@ services:
     env_file:
       - .env
     ports:
-     - "${PORT}:80"
-    networks:
-      net:
-        ipv4_address: "${IP}"
-
-networks:
-  net:
-    ipam:
-      driver: default
-      config:
-        - subnet: "${SUBNET}"
+     - "${PORT}:8085"
