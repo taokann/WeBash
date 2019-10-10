@@ -16,6 +16,7 @@ require('dotenv').config()
 /*SCRIPTS IMPORTS*/
 readFile = require("./res/scripts/readFile")
 echo = require("./res/scripts/echo")
+date = require("./res/scripts/date")
 help = require("./res/scripts/help")
 ping = require("./res/scripts/ping")
 man = require("./res/scripts/man")
@@ -74,6 +75,11 @@ app.get("/api/v1/:query", (req, res) => {
                 res.send(response)
             })
             break
+        case "date":
+	    date.run(query).then((response) => {
+		res.send(response)
+	    })
+	    break
         case 'help':
             help.run(query).then((response) => {
                 res.send(response)
