@@ -13,8 +13,8 @@
 exports.run = (query) => {
     return new Promise((resolve, reject) => {
         query.shift()
-	let date = new Date();
-	let dateString = date.toString();
+        let date = new Date();
+        let dateString = date.toString();
         let jsonRes = {
             status: "sucess",
             output: dateString

@@ -76,10 +76,10 @@ app.get("/api/v1/:query", (req, res) => {
             })
             break
         case "date":
-	    date.run(query).then((response) => {
-		res.send(response)
-	    })
-	    break
+            date.run(query).then((response) => {
+                res.send(response)
+            })
+            break
         case 'help':
             help.run(query).then((response) => {
                 res.send(response)
@@ -123,7 +123,10 @@ app.get("/api/v1/:query", (req, res) => {
     res.send()
 })
 
-const PORT = process.env.PORT || 8085
+var PORT = process.env.PORT || 8085
+if(process.env.CHANGEINFILES == "false") {
+    PORT = 8085
+}
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 })
