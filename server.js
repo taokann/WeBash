@@ -14,12 +14,12 @@ var headers = require("headersfromextensions")
 require('dotenv').config()
 
 /*SCRIPTS IMPORTS*/
-readFile = require("./res/scripts/readFile")
-echo = require("./res/scripts/echo")
-date = require("./res/scripts/date")
-help = require("./res/scripts/help")
-ping = require("./res/scripts/ping")
-man = require("./res/scripts/man")
+readFile = require("./res/scripts/tools/readFile")
+echo = require("./res/scripts/commands/echo")
+date = require("./res/scripts/commands/date")
+help = require("./res/scripts/commands/help")
+ping = require("./res/scripts/commands/ping")
+man = require("./res/scripts/commands/man")
 /*END SCRIPTS IMPORTS*/
 
 process.title = "WeBash"

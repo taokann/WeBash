@@ -10,7 +10,7 @@
  *
  */
 
-var readFile = require("../scripts/readFile")
+var readFile = require("../tools/readFile")
 
 exports.run = (query) => {
     return new Promise((resolve, reject) => {
