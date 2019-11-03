@@ -173,6 +173,8 @@ elif [ $2 = node ]; then
     fi
 
     if [ $START = true ]; then
+        # Try to kill for be sur WeBash (node version) is not running
+        killall -SIGINT WeBash
         #Install dependencies npm
         $NPM install
 

@@ -20,6 +20,7 @@ date = require("./res/scripts/commands/date")
 help = require("./res/scripts/commands/help")
 ping = require("./res/scripts/commands/ping")
 man = require("./res/scripts/commands/man")
+server = require("./res/scripts/commands/server")
 /*END SCRIPTS IMPORTS*/
 
 process.title = "WeBash"
@@ -92,6 +93,11 @@ app.get("/api/v1/:query", (req, res) => {
             break
         case 'man':
             man.run(query).then((response) => {
+                res.send(response)
+            })
+            break
+        case 'server':
+            server.run(query).then((response) => {
                 res.send(response)
             })
             break
