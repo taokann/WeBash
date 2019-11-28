@@ -9,6 +9,10 @@
  * You should have received a copy of the GNU Affero General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
  *
  */
+var osU = require('os-utils')
+var os = require('os')
+
+var time = require('../tools/time')
 
 exports.run = (query) => {
     return new Promise((resolve, reject) => {
@@ -43,12 +47,40 @@ exports.run = (query) => {
 "\\                                                            /\n"+
 " \\                                                          /\n"+
 "  \\________________________________________________________/\n"+
-"        By Alnotz ;-)"
+"        By Alnotz ;-)\n"
 
-        let jsonRes = {
-            status: "sucess",
-            output: serverString
-        }
-        resolve(jsonRes)
+        osU.cpuUsage(function(v){
+            /*CPU*/
+            cpuStr = v*100+""
+            cpuStr = cpuStr.substr(0, 3)
+            if(cpuStr.endsWith(".")) {
+                cpuStr = cpuStr.substr(0, 2)
+            }
+            serverString += 'CPU Usage : ' + cpuStr + "%"
+
+            /*PLATEFORM*/
+            serverString += "\nPlateform : " + osU.platform()
+
+            /*MEMORY*/
+            memStr = osU.freememPercentage()*100 + ""
+            memStr = memStr.substr(0, 3)
+            if(memStr.endsWith(".")) {
+                memStr = memStr.substr(0, 2)
+            }
+
+            totalMemStr = osU.totalmem()+""
+            totalMemStr = totalMemStr.split(".")[0]
+
+            serverString += "\nMemory : " + totalMemStr + "mo (free : " + memStr  + "%)"
+
+            /*UPTIME*/
+            serverString += "\nUptime : " + time.sToTime(os.uptime())
+
+            let jsonRes = {
+                status: "sucess",
+                output: serverString
+            }
+            resolve(jsonRes)
+        })
     })
 }
