@@ -98,5 +98,5 @@ Thanks for your interest in WeBash !
 WeBash is Copyright © 2019 Tao-Kann MARTIN and Olivier CARTIER
 
 
-If you have any questions, now or maybe a long time after we published this software, feel free to contact us by email : webash-at-taokann.com (both developpers will read your message).
+If you have any questions, now or maybe a long time after we published this software, feel free to contact us by email : webash-at-onemail-dot-re (both developpers will read your message).
 
