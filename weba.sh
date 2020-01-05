@@ -3,7 +3,7 @@
 #
 # File name: weba.sh
 # Description: Bash script to easily manage the WeBash server
-# Authors: colivier74
+# Authors: cestoliv
 # If you're a new WeBash contributor and worked on this file, please add your name here.
 #
 # This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -74,7 +74,7 @@ if [ $START = true ]; then
         #UPDATE
     $GIT -C $DIRECTORY pull
         # MAN-DB-TXT
-    $GIT clone https://github.com/colivier74/man-db-txt.git res/git-libs/man-db-txt
+    $GIT clone https://github.com/cestoliv/man-db-txt.git res/git-libs/man-db-txt
     $GIT -C res/git-libs/man-db-txt pull
 fi
 

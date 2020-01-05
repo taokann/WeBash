@@ -2,7 +2,7 @@
  *
  * File name: server.js
  * Description: infos about server
- * Authors: colivier74
+ * Authors: cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -10,56 +10,34 @@
  *
  */
 var osU = require('os-utils')
+var disk = require('diskusage')
 var os = require('os')
+var uname = require('node-uname')
 
 var time = require('../tools/time')
+var converter = require('../tools/converter')
 
-exports.run = (query) => {
+exports.run = (query, host) => {
     return new Promise((resolve, reject) => {
-        let serverString = "" +
-"    ________________________________________________________\n"+
-"  /.______________________________________________. ._. ._.\\ \n"+
-" / |______________________________________________| |_| |_| \\ \n"+
-"/____________________________________________________________\\ \n"+
-"|                                                            |\n"+
-"|                            ________        ________        |\n"+
-"|                           /       /       /       /        |\n"+
-"|                          /       /       /       /         |\n"+
-"|                         /       /       /       /          |\n"+
-"|                ________/       /_______/       /_______    |\n"+
-"|               /                                       /    |\n"+
-"|              /                                       /     |\n"+
-"|             /                                       /      |\n"+
-"|            /_______        ________        ________/       |\n"+
-"|                   /       /       /       /                |\n"+
-"|                  /       /       /       /                 |\n"+
-"|                 /       /       /       /                  |\n"+
-"|        ________/       /_______/       /_______            |\n"+
-"|       /                                       /            |\n"+
-"|      /                                       /             |\n"+
-"|     /                                       /              |\n"+
-"|    /_______        ________        ________/               |\n"+
-"|           /       /       /       /                        |\n"+
-"|          /       /       /       /                         |\n"+
-"|         /       /       /       /                          |\n"+
-"|        /_______/       /_______/                           |\n"+
-"|                                                            |\n"+
-"\\                                                            /\n"+
-" \\                                                          /\n"+
-"  \\________________________________________________________/\n"+
-"        By Alnotz ;-)\n"
-
         osU.cpuUsage(function(v){
+
+            /*HOST*/
+            let hostStrFin = "Host : " + host
+
+            /*DATE*/
+            let dateStrFin = "Date : " + new Date().toUTCString()
+
             /*CPU*/
             cpuStr = v*100+""
             cpuStr = cpuStr.substr(0, 3)
             if(cpuStr.endsWith(".")) {
                 cpuStr = cpuStr.substr(0, 2)
             }
-            serverString += 'CPU Usage : ' + cpuStr + "%"
+            let cpuStrFin = 'CPU Usage : ' + cpuStr + "%"
 
             /*PLATEFORM*/
-            serverString += "\nPlateform : " + osU.platform()
+            let unameObj = uname.uname()
+            let platformStrFin = "OS : " + unameObj.nodename + " " + unameObj.sysname + " " + unameObj.machine + " " + unameObj.release
 
             /*MEMORY*/
             memStr = osU.freememPercentage()*100 + ""
@@ -71,16 +49,53 @@ exports.run = (query) => {
             totalMemStr = osU.totalmem()+""
             totalMemStr = totalMemStr.split(".")[0]
 
-            serverString += "\nMemory : " + totalMemStr + "mo (free : " + memStr  + "%)"
+            let memStrFin = "RAM : " + totalMemStr + "mo (free : " + memStr  + "%)"
 
             /*UPTIME*/
-            serverString += "\nUptime : " + time.sToTime(os.uptime())
+            let uptimeStrFin = "Uptime : " + time.sToTime(os.uptime())
 
-            let jsonRes = {
-                status: "sucess",
-                output: serverString
-            }
-            resolve(jsonRes)
+
+            /*DISK USAGE*/
+            let path = os.platform() === 'win32' ? 'c:' : '/'
+            disk.check(path, function(err, info) {
+                if (err) {
+                    console.error(err)
+                }
+
+                let free = converter.bytesTo(info.free, "gb")
+                let total = converter.bytesTo(info.total, "gb")
+                let used = total - free
+                let percent = Math.round(used / total * 100)
+
+                let diskStringFin = "Disk : " + used + "G / " + total + "G (" + percent + "%)"
+                
+                let serverString = "" +
+                    "   _______________________________\n" +
+                    "  /._____________________. ._. ._.\\\n" +
+                    " / |_____________________| |_| |_| \\    SERVER INFO\n" +
+                    "/___________________________________\\   (the api host)\n" +
+                    "|                                   |\n" +
+                    "|               _____     _____     |   " + hostStrFin + "\n" +
+                    "|              /    /    /    /     |   " + dateStrFin + "\n" +
+                    "|        _____/    /____/    /____  |   " + platformStrFin + "\n" +
+                    "|       /                        /  |   " + cpuStrFin + "\n" +
+                    "|      /____     _____     _____/   |   " + memStrFin + "\n" +
+                    "|          /    /    /    /         |   " + diskStringFin + "\n" +
+                    "|    _____/    /____/    /____      |   " + uptimeStrFin + "\n" +
+                    "|   /                        /      |\n" +
+                    "|  /____     _____     _____/       |\n" +
+                    "|      /    /    /    /             |\n" +
+                    "|     /____/    /____/              |\n" +
+                    "\\                                   /\n" +
+                    " \\_________________________________/"
+
+
+                let jsonRes = {
+                    status: "sucess",
+                    output: serverString
+                }
+                resolve(jsonRes)
+            })
         })
     })
 }

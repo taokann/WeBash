@@ -17,5 +17,5 @@ exports.sToTime = (duration) => {
     minutes = Math.floor(duration / 60);
     seconds = duration % 60;
 
-    return hours + "h" + minutes + " " + seconds + 's'
+    return hours + "h" + minutes + "m, " + seconds + 's'
 }

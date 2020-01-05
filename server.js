@@ -2,7 +2,7 @@
  *
  * File name: server.js
  * Description: main node.js script file
- * Authors: taokann.one and colivier74
+ * Authors: taokann.one and cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -97,7 +97,7 @@ app.get("/api/v1/:query", (req, res) => {
             })
             break
         case 'server':
-            server.run(query).then((response) => {
+            server.run(query, req.get('host')).then((response) => {
                 res.send(response)
             })
             break

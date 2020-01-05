@@ -79,7 +79,7 @@ Here is a template of what you should add:
  *
  * File name: example.js
  * Description: example decription
- * Authors: taokann.one and colivier74
+ * Authors: taokann.one and cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
