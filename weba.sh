@@ -58,14 +58,6 @@ else
     exit 1
 fi
 
-if [ $START = true ]; then
-        #UPDATE
-    $GIT -C $DIRECTORY pull
-        # MAN-DB-TXT
-    $GIT clone https://github.com/cestoliv/man-db-txt.git res/git-libs/man-db-txt
-    $GIT -C res/git-libs/man-db-txt pull
-fi
-
 if [ -z $2 ]; then
     echo "Please specify a way to start/stop Webash"
     echo "Usage : bash webash.sh <start/stop> <way> [args ...]"
@@ -75,9 +67,18 @@ if [ -z $2 ]; then
     echo "  args : -p <port>"
     echo "         -n <name>"
     echo ""
-    echo "  way : node"
-    echo "    args : -p <port>"
+    echo "way : node"
+    echo "  args : -p <port>"
     exit 1
+
+if [ $START = true ]; then
+        #UPDATE
+    $GIT -C $DIRECTORY pull
+        # MAN-DB-TXT
+    $GIT clone https://github.com/cestoliv/man-db-txt.git res/git-libs/man-db-txt
+    $GIT -C res/git-libs/man-db-txt pull
+fi
+
 #DOCKER
 elif [ $2 = docker ]; then 
     #check for dependencies
