@@ -43,8 +43,8 @@ fi
 
 START=true
 if [ -z $1 ]; then
-    echo "Do you want to start or stop yout server ?"
-    echo "Please specify it with : bash webash.sh <start/stop>"
+    echo "Do you want to start or stop your server ?"
+    echo "Please specify it with : bash weba.sh <start/stop>"
     exit 1
 elif [ $1 = start ]; then
     START=true
