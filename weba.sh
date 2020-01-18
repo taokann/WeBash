@@ -10,6 +10,7 @@
 # You should have received a copy of the GNU Affero General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
 #
 
+if [[ $1 != "stop" ]]; then
 echo ""
 echo "   Welcome to your WeBash server !"
 echo "   _______________________________"
@@ -32,6 +33,7 @@ echo "|                                   |"
 echo "\\                                   /"
 echo " \\_________________________________/"
 echo ""
+fi
 
 DIRECTORY=$(cd `dirname $0` && pwd)
 GIT=$(type -p git)
@@ -59,9 +61,8 @@ else
 fi
 
 if [ -z $2 ]; then
-    echo "Please specify a way to start/stop Webash"
-    echo "Usage : bash webash.sh <start/stop> <way> [args ...]"
-    echo "(no args with stop)"
+    echo "Please specify a way to $1 Webash"
+    echo "Usage : bash webash.sh $1 <way> [args ...]"
     echo ""
     echo "way : docker"
     echo "  args : -p <port>"
@@ -71,6 +72,7 @@ if [ -z $2 ]; then
     echo "  args : -p <port>"
     exit 1
 
+#DEPENDENCIES
 if [ $START = true ]; then
         #UPDATE
     $GIT -C $DIRECTORY pull
