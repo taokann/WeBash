@@ -94,9 +94,9 @@ Clone the repo, then send a pull request with your amazing new command !
 
 Thanks for your interest in WeBash !
 
-## Contact
+## Credits & Contact
 WeBash is Copyright © 2019 Tao-Kann MARTIN and Olivier CARTIER
-
+The small text logo is released under GNU GPL. © 2019 Frédéric Y. C. Henry.
 
 If you have any questions, now or maybe a long time after we published this software, feel free to contact us by email : webash-at-onemail-dot-re (both developpers will read your message).
 
