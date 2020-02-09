@@ -79,7 +79,7 @@ Here is a template of what you should add:
  *
  * File name: example.js
  * Description: example decription
- * Authors: taokann.one and colivier74
+ * Authors: taokann.one and cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -94,9 +94,9 @@ Clone the repo, then send a pull request with your amazing new command !
 
 Thanks for your interest in WeBash !
 
-## Contact
+## Credits & Contact
 WeBash is Copyright © 2019 Tao-Kann MARTIN and Olivier CARTIER
+The small text logo is released under GNU GPL. © 2019 Frédéric Y. C. Henry.
 
-
-If you have any questions, now or maybe a long time after we published this software, feel free to contact us by email : webash-at-taokann.com (both developpers will read your message).
+If you have any questions, now or maybe a long time after we published this software, feel free to contact us by email : webash-at-onemail-dot-re (both developpers will read your message).
 

@@ -2,7 +2,7 @@
  *
  * File name: help.js
  * Description: help command
- * Authors: taokann.one and colivier74
+ * Authors: taokann.one and cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -65,10 +65,17 @@ exports.run = (query) => {
                     }
                     resolve(jsonRes)
                     break
-		case 'license':
-		    jsonRes = {
+                case 'license':
+                    jsonRes = {
                         status: "sucess",
                         output: license_help()
+                    }
+                    resolve(jsonRes)
+                    break
+                case 'server':
+                    jsonRes = {
+                        status: "sucess",
+                        output: server_help()
                     }
                     resolve(jsonRes)
                     break
@@ -91,9 +98,11 @@ help_help = () => {
     "Type help <command> to see the help of this command\n" +
     "info\n" +
     "readme\n" +
+    "license\n" +
     "echo [arg ...]\n" +
     "ping <host or ip> [arg ...]\n" +
     "source\n" +
+    "server\n" +
     "man <command>")
 }
 
@@ -132,5 +141,9 @@ man_help = () => {
 }
 
 license_help = () => {
-        return("Displays the integral text of the GNU Affero General Public License under which WeBash is distributed.");
+    return("Displays the integral text of the GNU Affero General Public License under which WeBash is distributed.");
+}
+
+server_help = () => {
+    return("Displays information about the server hosting WeBash.");
 }

@@ -1,8 +1,8 @@
 /*
  *
- * File name: echo.js
- * Description: echo command
- * Authors: taokann.one and colivier74
+ * File name: date.js
+ * Description: date unix command
+ * Authors: taokann.one
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -13,11 +13,11 @@
 exports.run = (query) => {
     return new Promise((resolve, reject) => {
         query.shift()
-        let toEcho = query.join(" ")
-
+        let date = new Date();
+        let dateString = date.toString();
         let jsonRes = {
             status: "sucess",
-            output: toEcho
+            output: dateString
         }
         resolve(jsonRes)
     })

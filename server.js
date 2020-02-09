@@ -2,7 +2,7 @@
  *
  * File name: server.js
  * Description: main node.js script file
- * Authors: taokann.one and colivier74
+ * Authors: taokann.one and cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -14,11 +14,13 @@ var headers = require("headersfromextensions")
 require('dotenv').config()
 
 /*SCRIPTS IMPORTS*/
-readFile = require("./res/scripts/readFile")
-echo = require("./res/scripts/echo")
-help = require("./res/scripts/help")
-ping = require("./res/scripts/ping")
-man = require("./res/scripts/man")
+readFile = require("./res/scripts/tools/readFile")
+echo = require("./res/scripts/commands/echo")
+date = require("./res/scripts/commands/date")
+help = require("./res/scripts/commands/help")
+ping = require("./res/scripts/commands/ping")
+man = require("./res/scripts/commands/man")
+server = require("./res/scripts/commands/server")
 /*END SCRIPTS IMPORTS*/
 
 process.title = "WeBash"
@@ -74,6 +76,11 @@ app.get("/api/v1/:query", (req, res) => {
                 res.send(response)
             })
             break
+        case "date":
+            date.run(query).then((response) => {
+                res.send(response)
+            })
+            break
         case 'help':
             help.run(query).then((response) => {
                 res.send(response)
@@ -86,6 +93,11 @@ app.get("/api/v1/:query", (req, res) => {
             break
         case 'man':
             man.run(query).then((response) => {
+                res.send(response)
+            })
+            break
+        case 'server':
+            server.run(query, req.get('host')).then((response) => {
                 res.send(response)
             })
             break
@@ -117,7 +129,10 @@ app.get("/api/v1/:query", (req, res) => {
     res.send()
 })
 
-const PORT = process.env.PORT || 8085
+var PORT = process.env.PORT || 8085
+if(process.env.CHANGEINFILES == "false") {
+    PORT = 8085
+}
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 })
