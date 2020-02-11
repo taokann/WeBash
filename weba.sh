@@ -73,13 +73,13 @@ if [ -z $2 ]; then
     exit 1
 
 #DEPENDENCIES
-if [ $START = true ]; then
+#if [ $START = true ]; then
         #UPDATE
-    $GIT -C $DIRECTORY pull
+#    $GIT -C $DIRECTORY pull
         # MAN-DB-TXT
-    $GIT clone https://github.com/cestoliv/man-db-txt.git res/git-libs/man-db-txt
-    $GIT -C res/git-libs/man-db-txt pull
-fi
+#    $GIT clone https://github.com/cestoliv/man-db-txt.git res/git-libs/man-db-txt
+#    $GIT -C res/git-libs/man-db-txt pull
+#fi
 
 #DOCKER
 elif [ $2 = docker ]; then 

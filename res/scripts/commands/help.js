@@ -103,7 +103,7 @@ help_help = () => {
     "ping <host or ip> [arg ...]\n" +
     "source\n" +
     "server\n" +
-    "man <command>")
+    "man <command> [optionnal MANWIDTH (ex: 80)]")
 }
 
 no_help = (command) => {
@@ -136,7 +136,7 @@ source_help = () => {
 }
 
 man_help = () => {
-    return("man : man <command>\n" +
+    return("man : man <command> [optionnal MANWIDTH (ex: 80)]\n" +
     "Show the man of the specified command")
 }
 
