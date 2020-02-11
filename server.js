@@ -11,6 +11,14 @@
 
 var express = require("express")
 var headers = require("headersfromextensions")
+const https = require("https")
+const fs = require("fs")
+
+const options = {
+  key: fs.readFileSync("/absolute/path/site-key.pem"), // Generate them with certbot then put absolute path here.
+  cert: fs.readFileSync("/absolute/path/chain.pem")
+};
+
 require('dotenv').config()
 
 /*SCRIPTS IMPORTS*/
@@ -133,6 +141,5 @@ var PORT = process.env.PORT || 8085
 if(process.env.CHANGEINFILES == "false") {
     PORT = 8085
 }
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-})
+https.createServer(options, app).listen(PORT);
+
