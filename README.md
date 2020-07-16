@@ -66,6 +66,33 @@ ex: `["echo", "Hello", "World!"]`
 - `help()` : Returns a string, usage help for your function which will be displayed in `help <command>`
 - `short_help()` : Returns a string, the usage help for your function, in a single line which will be displayed in `help --list`
 
+Example with simplified `echo` :
+
+```javascript
+exports.run = (query) => {
+    return new Promise((resolve, reject) => {
+        query.shift()
+        let toEcho = query.join(" ")
+
+        let jsonRes = {
+            status: "sucess",
+            output: toEcho
+        }
+
+        resolve(jsonRes)
+    })
+}
+
+exports.help = () => {
+    return("echo : echo [arg ...]\n" +
+    "Display the args, separate by a space character.")
+}
+
+exports.short_help = () => {
+    return("echo [arg ...]")
+}
+```
+
 ## Free software
 All WeBash software and source code is free and open-source software (*free* refers to freedom, not price), you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3.0 of the license.
 For more info see 'LICENSE' file in repo.

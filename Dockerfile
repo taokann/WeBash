@@ -19,6 +19,7 @@ COPY server.js /app
 COPY .env /app
 COPY res /app/res
 COPY README.md /app
+COPY LICENSE /app
 
 EXPOSE 8085
 CMD [ "npm", "start" ]
