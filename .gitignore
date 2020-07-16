@@ -1,4 +1,2 @@
-.env
-docker-compose.yml
-Dockerfile
-res/git-libs/
+package-lock.json
+node_modules

@@ -11,50 +11,60 @@ The users will be able to navigate throught your website (or just a part of it) 
 Note that you have to build the command line interface, WeBash only provides output of commands.
 
 ## Commands
-You can get the commands list by sending 'help' to the API.
+You can get the commands list by sending 'help --list' to the API.
 You can suggest new commands by opening an issue on GitHub.
 The project is still under developpement, important commands may be missing because we are working on them.
 
 ## How to use it ?
-The requests must be sent to https://webash.colivier.dev/api/v1/<your command here>
+The requests must be sent to `https://webash.taokann.one/api/v1/<your command here>`
+  
+ex: `https://webash.taokann.one/api/v1/echo Hello World!`
+Will return : 
+  
+```javascript
+  {
+    "status": "sucess",
+    "output": "Hello World!"
+  }
+```
+  
+The testing branch is available at : `https://testing.webash.taokann.one/api/v1/`
+
 You will get the output in response.
 
 ## Self-hosting
 The `master` branch is always stable and working, whereas the `testing` branch is where the developpers work, so you should not use it. When a new feature is ready, we will merge it into `master`
 
-**You can update your instance by simply stop and rerun your server with the scripts ;)**
-
 To host an instance, start by cloning the repository :
 
-`git clone https://github.com/taokann/WeBash.git`
+```
+git clone https://github.com/taokann/WeBash.git
+cd WeBash
+npm install
+npm start
+```
 
-`cd WeBash`
-
-Now you have to run `start.sh` with the way you want to use in parameter, here are the procedures according to the ways :
+### .env
+Customize your instance by modifying the `.env` file!
 
 ### Docker
-Run `bash start.sh docker`.
-You can specify a **local ip** for the server with `-i` :
+A `docker-compose.yml` and a `Dockerfile` are available.
+You can (and should) use the .env file
 
-`bash start.sh docker -i 172.22.0.100`
+## Contribute
+First of all, thank you for contributing!
 
-A **port** with `-p` :
+### Adding command
+To add a command, create a file named after it in `./res/commands`
 
-`bash start.sh docker -p 8085`
+Then you will have to create three functions:
 
-A **name** for the container with `-n` :
+`query` is an array of the command
+ex: `["echo", "Hello", "World!"]`
 
-`bash start.sh docker -n webash`
-
-#### Defaults params :
-port : 8085
-
-container name: webash
-
-local ip: 172.22.0.100(:80)
-
-#### Properly stop the container :
-`bash stop.sh docker`
+- `run(query)` : Returns a promise, the result of your command
+- `help()` : Returns a string, usage help for your function which will be displayed in `help <command>`
+- `short_help()` : Returns a string, the usage help for your function, in a single line which will be displayed in `help --list`
 
 ## Free software
 All WeBash software and source code is free and open-source software (*free* refers to freedom, not price), you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3.0 of the license.
@@ -79,7 +89,7 @@ Here is a template of what you should add:
  *
  * File name: example.js
  * Description: example decription
- * Authors: taokann.one and colivier74
+ * Authors: taokann.one and cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.

@@ -2,7 +2,7 @@
  *
  * File name: server.js
  * Description: main node.js script file
- * Authors: taokann.one and colivier74
+ * Authors: taokann.one and cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -10,99 +10,40 @@
  */
 
 var express = require("express")
-var headers = require("headersfromextensions")
-var fs = require("fs")
+var mime_ext = require('mimetype-extension')
+const dotenv = require('dotenv')
+dotenv.config()
 
-/*SCRIPTS IMPORTS*/
-readFile = require("./res/scripts/readFile")
-echo = require("./res/scripts/echo")
-help = require("./res/scripts/help")
-ping = require("./res/scripts/ping")
-man = require("./res/scripts/man")
-/*END SCRIPTS IMPORTS*/
+var formatBash = require("./res/utilities/formatBash")
 
 app = express()
 
 app.get("/api/v1/:query", (req, res) => {
     res.header('Access-Control-Allow-Origin', '*')
-    res.header('Content-Type', headers.get("json"))
+    res.header('Content-Type', mime_ext.get("json"))
 
-    let jsonRes
     query = req.params.query
     query = query.split(" ")
 
-    /*
-    JSON TO RETURN :
-
-    Sucess :
-        let jsonRes = {
-            status: "sucess",
-            output: "an output"
-        }
-    
-    Error : 
-        let jsonRes = {
-            status: "error",
-            error: "error code",
-            output: "an output"
-        }
-
-    ERRORS CODES : 
-    0000 : nonexistent command
-    0001 : arg(s) error
-    0002 : a required file don't exist
-
-    9999 : undefined error
-    */
-
-    switch(query[0]) {
-        case "readme":
-            readFile.run("README.md", false).then((response) => {
-                res.send(response)
-            }).catch((response) => {
-                res.send(response)
-            })
-            break
-        case "echo":
-            echo.run(query).then((response) => {
-                res.send(response)
-            })
-            break
-        case 'help':
-            help.run(query).then((response) => {
-                res.send(response)
-            })
-            break
-        case 'ping':
-            ping.run(query).then((response) => {
-                res.send(response)
-            })
-            break
-        case 'man':
-            console.log("hey")
-            man.run(query).then((response) => {
-                res.send(response)
-            })
-            break
-        case "info":
-            jsonRes = {
-                status: "sucess",
-                output: "This is WeBash, a web-based terminal emulator.\n\rYou can get the list of commands by typing 'help'.\n\rFor more info type 'readme' or visit our repository on http://github.com/taokann/WeBash"
-            }
-            res.send(jsonRes)
-            break
-        default:
-            jsonRes = {
-                status: "sucess",
-                output: "Command not found - type 'help' to get the list of commands"
-            }
-            res.send(jsonRes)
-            break
+    try {
+        require("./res/commands/" + query[0])
     }
+    catch (err) {
+        jsonRes = {
+            status: "sucess",
+            output: formatBash.formatBash("Command not found - type 'help' to get the list of commands", "red")
+        }
+        res.send(jsonRes)
+    }
+
+    require("./res/commands/" + query[0]).run(query).then((response) => {
+        res.send(response)
+    })
 })
 .use((req, res, next) => {
     res.status(404)
     res.send()
 })
 
-app.listen(80)
+app.listen(process.env.PORT)
+console.log("WeBash started on port : " + process.env.PORT)

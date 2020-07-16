@@ -18,8 +18,9 @@
   },
   "homepage": "https://github.com/taokann/WeBash#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.16.4",
-    "headersfromextensions": "^1.0.1",
+    "mimetype-extension": "0.0.3",
     "node-fetch": "^2.3.0"
   }
 }

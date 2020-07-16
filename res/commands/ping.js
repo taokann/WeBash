@@ -2,7 +2,7 @@
  *
  * File name: ping.js
  * Description: ping command
- * Authors: taokann.one and colivier74
+ * Authors: taokann.one and cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -169,4 +169,14 @@ exports.run = (query) => {
         })
     })
     
+}
+
+exports.help = () => {
+    return("ping : ping <host or ip> [arg ...]\n" +
+    "parameters : [-i interval] [-c count]\n" +
+    "             [-s packetsize] [-w deadline]")
+}
+
+exports.short_help = () => {
+    return("ping <host> [arg ...]")
 }

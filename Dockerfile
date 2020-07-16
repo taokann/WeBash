@@ -1,7 +1,7 @@
 #
 # File name: Dockerfile_pattern
 # Description: Dockerfile which builds the Webash api's image
-# Authors: colivier74
+# Authors: cestoliv
 # If you're a new WeBash contributor and worked on this file, please add your name here.
 #
 # This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -9,15 +9,16 @@
 #
 
 FROM node:latest
-MAINTAINER Olivier Cartier <colivier.dev@gmail.com>
+LABEL maintainer="cestoliv@chevro.fr"
 
 WORKDIR /app
 COPY package.json /app
 RUN npm install
 
 COPY server.js /app
+COPY .env /app
 COPY res /app/res
 COPY README.md /app
 
-EXPOSE 80
+EXPOSE 8085
 CMD [ "npm", "start" ]
