@@ -34,7 +34,7 @@ Here is the structure of the data you need to send.
     {
         command_id: str | int; a random id for your request,
         command: str; the unix-like command,
-        colored: boolean; shoold the answer be colored ?
+        colored: boolean; should the answer be colored ?
     }
 */
 ```
@@ -165,5 +165,5 @@ WeBash is Copyright © 2019 Tao-Kann MARTIN and Olivier CARTIER
 
 If you have any questions, now or maybe a long time after we published this software, feel free to contact us by email !
 [cestoliv](mailto:me@cestoliv.com?subject=[GitHub]%20WeBash)
-webash-at-taokann.com (both developpers will read your message).
+webash-at-taokann.com (both developers will read your message).
 

@@ -50,7 +50,7 @@ io.sockets.on('connection', (socket) => {
             {
                 command_id: str | int; a random id for your request,
                 command: str; the unix-like command,
-                colored: boolean; shoold the answer be colored ?
+                colored: boolean; should the answer be colored ?
             }
         */
 
