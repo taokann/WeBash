@@ -1,8 +1,8 @@
 /*
  *
- * File name: echo.js
- * Description: echo command
- * Authors: taokann.one and cestoliv
+ * File name: res/commands/echo.js
+ * Description: the echo command
+ * Authors: cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
@@ -10,17 +10,18 @@
  *
  */
 
-exports.run = (query) => {
+exports.run = (command_args, socket) => {
     return new Promise((resolve, reject) => {
-        query.shift()
-        let toEcho = query.join(" ")
+        let toEcho = command_args.parsed_command.args.join(" ") + "\n"
 
-        let jsonRes = {
-            status: "sucess",
-            output: toEcho
-        }
+        socket.emit("command_answer", {
+            ended: true,
+            command_id: command_args.command_id,
+            text: toEcho,
+            order: 0
+        })
 
-        resolve(jsonRes)
+        resolve()
     })
 }
 

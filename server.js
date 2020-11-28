@@ -2,48 +2,102 @@
  *
  * File name: server.js
  * Description: main node.js script file
- * Authors: taokann.one and cestoliv
+ * Authors: cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
  * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
  * You should have received a copy of the GNU Affero General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
+ *
  */
 
-var express = require("express")
-var mime_ext = require('mimetype-extension')
+const express = require("express")
+const session = require('express-session')
+const sharedsession = require("express-socket.io-session")
 const dotenv = require('dotenv')
 dotenv.config()
 
-var formatBash = require("./res/utilities/formatBash")
+const parser = require("./res/utilities/parser")
 
-app = express()
-
-app.get("/api/v1/:query", (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Content-Type', mime_ext.get("json"))
-
-    query = req.params.query
-    query = query.split(" ")
-
-    try {
-        require("./res/commands/" + query[0])
+const app = express()
+const server = require('http').Server(app)
+const io = require('socket.io')(server, {
+    cors: {
+        origin: '*'
     }
-    catch (err) {
-        jsonRes = {
-            status: "sucess",
-            output: formatBash.formatBash("Command not found - type 'help' to get the list of commands", "red")
+})
+
+var sessionMiddleware = session({
+    secret: 'webash is awesome',
+    resave: true,
+    saveUninitialized: true
+})
+
+app.use(sessionMiddleware)
+
+/*
+    we can't use shared session (between express and socket.io)
+        express : req.session
+        socket.io : socket.handshake.session
+*/
+io.use(sharedsession(sessionMiddleware, {
+    autoSave: true
+}))
+
+io.sockets.on('connection', (socket) => {
+    socket.on('command', (command_args) => {
+        /*
+            command_args structure :
+            {
+                command_id: str | int; a random id for your request,
+                command: str; the unix-like command,
+                colored: boolean; shoold the answer be colored ?
+            }
+        */
+
+        /*
+            answer structure :
+            {
+                ended: boolean; is the command return finished ?,
+                command_id: str | int; your random id,
+                text: str; answer of your command, may be partial,
+                order: int; order of the answer (for partial answer)
+            }
+        */
+
+        if(typeof(command_args) == "object") { // Is it really an object that is given?
+            if("command" in command_args && "command_id" in command_args) { // Minimum attributes
+                command_args.parsed_command = parser.parse(command_args.command)
+
+                command_args.parsed_command = command_args.parsed_command[0]
+    
+                try {
+                    // Verifying the existence of the module
+                    require("./res/commands/" + command_args.parsed_command.program).run(command_args, socket)
+                }
+                catch (err) {
+                    socket.emit("command_answer", {
+                        ended: true,
+                        command_id: command_args.command_id,
+                        text: "Command not found - type 'help' to get the list of commands"
+                    })
+                }
+            }
+            else {
+                socket.emit("command_answer", {
+                    ended: true,
+                    text: "Your WeBash object is incomplete"
+                })
+            }
         }
-        res.send(jsonRes)
-    }
-
-    require("./res/commands/" + query[0]).run(query).then((response) => {
-        res.send(response)
+        else {
+            socket.emit("command_answer", {
+                ended: true,
+                text: "Bad data structure, you must send an object"
+            })
+        }
     })
 })
-.use((req, res, next) => {
-    res.status(404)
-    res.send()
-})
 
-app.listen(process.env.PORT)
-console.log("WeBash started on port : " + process.env.PORT)
+server.listen(process.env.PORT, function () {
+    console.log(`Server running on port ${process.env.PORT} !`)
+})

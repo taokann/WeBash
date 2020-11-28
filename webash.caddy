@@ -1,9 +1,4 @@
-webash.taokann.one {
-    @cachedFiles {
-        path *.jpg *.jpeg *.png *.gif *.ico *.js *.css *.ttf *.woff *.woff2 *.svg
-    }
-    header @cachedFiles Cache-Control "public, max-age=604800, must-revalidate"
-    
+webash.taokann.one {    
     reverse_proxy * 127.0.0.1:8085 {
         header_up Host {http.request.host}
         header_up X-Real-IP {http.request.remote}

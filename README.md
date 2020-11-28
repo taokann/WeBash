@@ -1,39 +1,58 @@
 # WeBash
-A javascript terminal emulator for websites
-A nodeJS API that provides output of commands you sent to it
+An API based on Socket.io and NodeJS which emulates a BASH terminal!
 
 ## I don't understand...
 Always dreamed to have your website feel like a terminal ?
 Build it with WeBash ! WeBash is a contraction of 'Web' and 'Bash'.
 
+WeBash is an API based on Socket.io which will allow you to send bash commands and get their outputs.
 
-The users will be able to navigate throught your website (or just a part of it) using commands provided by WeBash API. If you choose to use WeBash for a entire website, it will be one-page : WeBash will carry informations from other pages to bring them to the user, who does not move from your CLI.
-Note that you have to build the command line interface, WeBash only provides output of commands.
+You can, with WeBash, create a custom web-based terminal!
 
-## Commands
-You can get the commands list by sending 'help --list' to the API.
-You can suggest new commands by opening an issue on GitHub.
-The project is still under developpement, important commands may be missing because we are working on them.
+## How to use
+The WeBash API is based on socket.io, here is how to use it with a javascript script. You will find several usage examples in `examples/`
 
-## How to use it ?
-The requests must be sent to `https://webash.taokann.one/api/v1/<your command here>`
-  
-ex: `https://webash.taokann.one/api/v1/echo Hello World!`
-Will return : 
-  
 ```javascript
-  {
-    "status": "sucess",
-    "output": "Hello World!"
-  }
-```
-  
-The testing branch is available at : `https://testing.webash.taokann.one/api/v1/`
+var socket = io.connect("https://webash.cestoliv.com")
 
-You will get the output in response.
+var command_params = {
+    colored: false,
+    command_id: Math.random().toString(16).substr(2, 8), // random string
+    command: "echo Hello WeBash!"
+}
+socket.emit("command", command_params) // send the command
+
+socket.on('command_answer', (answer) => {
+    console.log(answer.text)
+})
+```
+
+Here is the structure of the data you need to send.
+```javascript
+/*
+    command_args structure :
+    {
+        command_id: str | int; a random id for your request,
+        command: str; the unix-like command,
+        colored: boolean; shoold the answer be colored ?
+    }
+*/
+```
+And the structure of the data that you will receive.
+```javascript
+/*
+    answer structure :
+    {
+        ended: boolean; is the command return finished ?,
+        command_id: str | int; your random id,
+        text: str; answer of your command, may be partial,
+        order: int; order of the answer (for partial answer)
+    }
+*/
+```
 
 ## Self-hosting
-The `master` branch is always stable and working, whereas the `testing` branch is where the developpers work, so you should not use it. When a new feature is ready, we will merge it into `master`
+The `master` branch is always stable and working, whereas the `testing` branch is where the developers work, so you should not use it. When a new feature is ready, we will merge it into `master`.
 
 To host an instance, start by cloning the repository :
 
@@ -44,42 +63,58 @@ npm install
 npm start
 ```
 
+### Systemd
+*You can use webash.service to start the bot as a systemd service.*
+
+    sed -i "s?^WorkingDirectory=.*?WorkingDirectory=$(pwd)?g" webash.service
+
+    cp webash.service /etc/systemd/system/webash.service
+
+    sudo systemctl start webash
+
 ### .env
 Customize your instance by modifying the `.env` file!
-
-### Docker
-A `docker-compose.yml` and a `Dockerfile` are available.
-You can (and should) use the .env file
+- `PORT` : Were your WeBash instance will listen
 
 ## Contribute
 First of all, thank you for contributing!
 
 ### Adding command
-To add a command, create a file named after it in `./res/commands`
+To add a command, create a file named after it in `res/commands`
 
 Then you will have to create three functions:
 
-`query` is an array of the command
-ex: `["echo", "Hello", "World!"]`
-
-- `run(query)` : Returns a promise, the result of your command
+- `run(query)` : Returns a promise, resolved when your command is ended
 - `help()` : Returns a string, usage help for your function which will be displayed in `help <command>`
 - `short_help()` : Returns a string, the usage help for your function, in a single line which will be displayed in `help --list`
 
-Example with simplified `echo` :
+Example with simplified `echo.js` :
 
 ```javascript
-exports.run = (query) => {
+/*
+ *
+ * File name: res/commands/echo.js
+ * Description: the echo command
+ * Authors: cestoliv
+ * If you're a new WeBash contributor and worked on this file, please add your name here.
+ *
+ * This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
+ * You should have received a copy of the GNU Affero General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
+ *
+ */
+
+exports.run = (command_args, socket) => {
     return new Promise((resolve, reject) => {
         query.shift()
         let toEcho = query.join(" ")
 
-        let jsonRes = {
-            status: "sucess",
-            output: toEcho
-        }
+        socket.emit("command_answer", {
+            ended: false,
+            command_id: command_args.command_id,
+            text: toEcho
+        })
 
-        resolve(jsonRes)
+        resolve()
     })
 }
 
@@ -104,7 +139,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU Affero General Public License along with this program, in 'LICENSE' file of the repo. If not, see <https://www.gnu.org/licenses/>.
 
 ### License note
-Please add at the beginning of each new file a large comment contaning:
+Please add at the beginning of each new file a large comment containing:
 * File name
 * Description
 * Author
@@ -114,8 +149,8 @@ Here is a template of what you should add:
 ```
 /*
  *
- * File name: example.js
- * Description: example decription
+ * File name: path/to/example.js
+ * Description: example description
  * Authors: taokann.one and cestoliv
  * If you're a new WeBash contributor and worked on this file, please add your name here.
  *
@@ -124,16 +159,11 @@ Here is a template of what you should add:
  */
 ```
 
-## Get involved
-You can contribute to WeBash by offering new commands to it.
-Clone the repo, then send a pull request with your amazing new command !
-
-
-Thanks for your interest in WeBash !
-
 ## Contact
 WeBash is Copyright © 2019 Tao-Kann MARTIN and Olivier CARTIER
 
 
-If you have any questions, now or maybe a long time after we published this software, feel free to contact us by email : webash-at-taokann.com (both developpers will read your message).
+If you have any questions, now or maybe a long time after we published this software, feel free to contact us by email !
+[cestoliv](mailto:me@cestoliv.com?subject=[GitHub]%20WeBash)
+webash-at-taokann.com (both developpers will read your message).
 

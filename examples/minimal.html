@@ -1,0 +1,126 @@
+<!--
+
+    File name: examples/echo.js
+    Description: basic example
+    Authors: cestoliv
+    If you're a new WeBash contributor and worked on this file, please add your name here.
+
+    This file is part of the WeBash project with is released under the terms of GNU Affero General Public License V3.0.
+    You should have received a copy of the GNU Affero General Public License along with WeBash. If not, see <https://www.gnu.org/licenses/>.
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeBash - Minimal</title>
+</head>
+<body>
+    <p id="command_answer"></p>
+    <input id="command_input">
+    <button id="send_command">SEND</button>
+
+    <script src="https://webash.cestoliv.com/socket.io/socket.io.js"></script>
+    <script>
+        const SOCKET_URL = "https://webash.cestoliv.com"
+
+        var webash_params = {
+            colored: false
+        }
+
+        var webash_answers = {} // we are gonna store all the commands and answers based on their id
+        /* 
+            future structure of webash_answers :
+
+            {
+                "d9adfe92": {
+                    order: 0,
+                    command: {colored: false, command: "echo Hello WeBash !", command_id: "d9adfe92"},
+                    answers: [
+                        {ended: true, command_id: "d9adfe92", text: "Hello WeBash !\n", order: 0}
+                    ]
+                },
+                "be6d89c0": {
+                    order: 1,
+                    command: {colored: false, command: "echo How are you ?", command_id: "be6d89c0"},
+                    answers: [
+                        {ended: true, command_id: "be6d89c0", text: "How are you ? !\n", order: 0}
+                    ]
+                }
+            }
+        */
+
+        var webash_answers_order = [] // this is where we will store the order of the commands
+        /* 
+            future structure of webash_answers_order :
+                [
+                    "d9adfe92",
+                    "be6d89c0"
+                ]
+            }
+        */
+
+        var socket = io.connect(SOCKET_URL)
+
+        document.getElementById("send_command").onclick = () => {
+            // construct the command
+            command_params = {...webash_params} // take the main params
+            command_params.command = document.getElementById("command_input").value // add your command
+            command_params.command_id = Math.random().toString(16).substr(2, 8) // random string
+
+            // ui
+            document.getElementById("command_input").value = "" // empty the input
+            document.getElementById("command_input").disabled = true // disable the input
+            document.getElementById("send_command").disabled = true // disable the button
+            
+            // storing command for future display
+            webash_answers_order.push(command_params.command_id) // add the command id to order
+
+            webash_answers[command_params.command_id] = {}
+            webash_answers[command_params.command_id].command = command_params
+            webash_answers[command_params.command_id].answers = []
+            
+            socket.emit("command", command_params) // send the command
+        }
+
+        let finished = true
+        socket.on('command_answer', (answer) => {
+            webash_answers[answer.command_id].answers.push(answer)
+
+            if(answer.ended) {
+                finished = true
+                document.getElementById("command_input").disabled = false // enable the input
+                document.getElementById("send_command").disabled = false // enable the button
+            }
+
+            display_answers()
+        })
+
+        display_answers = () => {
+            let answer_string = ""
+
+            // loop in every commands requests
+            for(i = 0; i < webash_answers_order.length; i++) {
+                // show the command
+                answer_string += "  > " + webash_answers[webash_answers_order[i]].command.command + "\n"
+            
+                let command_answers = webash_answers[webash_answers_order[i]].answers
+                // re-order the answers (if they are partials)
+                command_answers = command_answers.sort((a, b) => {
+                    return a.order > b.order ? 1 : -1
+                })
+
+                // loop in the answers (most of the time, there will be only one)
+                for(j = 0; j < command_answers.length; j++) {
+                    answer_string += command_answers[j].text
+                }
+            }
+
+            document.getElementById("command_answer").innerText = answer_string
+        }
+
+    </script>
+</body>
+</html>

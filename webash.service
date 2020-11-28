@@ -3,7 +3,7 @@ Description=A javascript terminal emulator for websites
 
 [Service]
 WorkingDirectory=/home/cestoliv/PROD/WeBash/
-ExecStart=/usr/bin/node server.js
+ExecStart=/usr/bin/npm start
 
 Restart=always
 
