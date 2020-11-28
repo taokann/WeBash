@@ -12,6 +12,8 @@ You can, with WeBash, create a custom web-based terminal!
 ## How to use
 The WeBash API is based on socket.io, here is how to use it with a javascript script. You will find several usage examples in `examples/`
 
+You can try our [minimal example](https://htmlpreview.github.io/?https://github.com/taokann/WeBash/blob/v2/examples/minimal.html), on `examples/minimal.html` !
+
 ```javascript
 var socket = io.connect("https://webash.cestoliv.com")
 
